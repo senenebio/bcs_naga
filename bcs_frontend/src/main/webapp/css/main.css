@@ -1,0 +1,31 @@
+.bcs_border {
+  font-size: 20px;
+  border-style: solid;
+  border-color: #337ab7;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* ------
+   bootstrap DatePicker 
+
+.datepicker {
+     top: 0;
+     left: 0;
+     width: 216px;
+     height: auto;
+	 margin: auto;
+     font: 9pt 'Gotham', Arial, Helvetica, Sans-Serif;
+     -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+     -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+     -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+     border-radius: 4px;
+ }
+ -----*/

@@ -1,0 +1,177 @@
+
+<ng-include src=" 'views/navigation.html' "></ng-include>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="panel panel-primary" name="searchPanel" id="searchPanel">						
+				<div class="panel-body">
+					
+					<script type="text/ng-template" id="customTemplate.html">
+						<a>								
+							<span ng-bind-html="match.model.plateNumber | uibTypeaheadHighlight:query"></span>
+							<span>{{match.model.busCompany}}</span>
+						</a>
+					</script>
+					<!--
+					<pre class="hidden">Model: {{arrival_search | json}}</pre>
+					-->
+					<div class="input-group custom-search-form">
+						<input type="text" ng-model="arrival_search" placeholder="Enter vehicle plate number..." 
+								uib-typeahead="result.plateNumber for result in queryVehicleByPlateNumber($viewValue)"
+								typeahead-template-url="customTemplate.html"
+								typeahead-loading="loadingRegisteredVehicles" 
+								typeahead-no-results="noResults" 
+								class="form-control">							
+							<i ng-show="loadingRegisteredVehicles" class="fa fa-refresh"></i>
+							<div ng-show="noResults">
+							  <i class="fa fa-times"></i> No Results Found
+							</div>
+							<span class="input-group-btn">
+								<button ng-click="populateArrivalData()" type="button" class="btn btn-primary">				
+									<i> New Arrival </i><i class="fa fa-plus"></i> 
+								</button>
+							</span>
+						</div>
+					</div>						
+					<!-- /input-group -->
+						
+			</div>
+		</div>
+		<br/>
+	</div>
+	<!-- /.row -->
+	
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-primary" name="editPanel" id="editPanel" ng-show="isEditPanelVisible">
+				<div class="panel-heading">
+					Close
+					<button ng-click="cancelArrivalData()" type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa fa-times"></i> 
+					</button>
+				</div>
+				<div class="panel-body">
+					<form role="form" id="arrivalForm" name="arrivalForm" class="form-horizontal alert" novalidate >
+						<div class="row">
+							<div class= "form-group">								
+								<label class="col-md-2"> Plate Number </label>
+								<div class="col-md-2">
+									<input name="plateNumber" ng-model="tpModel.plateNumber" 
+										type="text" class="form-control text-uppercase"
+										data-uppercased
+										placeholder="Plate #" required readonly/>									
+								</div>
+								<label class="col-md-2"> Arrival Time </label>								
+								<div class="col-md-4 input-group date">
+									<input id="datetimepickerArrivalTime" 
+										name="arrivalTime" ng-model="tpModel.arrivalTime"
+										type="text" class="col-xs-4 form-control text-uppercase" 
+										data-date-time-picker
+										placeholder="DATE/TIME" required/>
+									<span class="input-group-addon">
+										<span class="fa fa-calendar"></span>
+									</span>										
+								</div>
+								
+							</div>
+							<div class= "form-group">
+								
+								<label class="col-md-2"> Body Number </label>
+								<div class="col-md-2">
+									<input name="bodyNumber" ng-model="tpModel.bodyNumber"
+										type= "text" class= "form-control text-uppercase" 
+										data-uppercased
+										placeholder="BODY #"/>									
+								</div>
+								
+								<label class="col-md-2"> Bus Company </label>
+									
+								<div class="col-md-4">
+									<input name="busCompany" ng-model="tpModel.busCompany"
+										type= "text" class= "form-control text-uppercase" 
+										data-uppercased
+										placeholder= "BUS COMPANY"/>
+								</div>
+							</div>
+							<div class= "form-group">								
+								
+								<label class="col-md-2"> Origin </label>
+								<div class="col-md-4">
+									<input name="arrivalOrigin" ng-model="tpModel.arrivalOrigin"
+										type= "text" class= "form-control text-uppercase" 
+										data-uppercased
+										placeholder= "ARRIVAL ORIGIN"/>
+								</div>
+								
+								<label class="col-md-2"> Destination </label>
+								<div class="col-md-4">
+									<input name="arrivalDestination" ng-model="tpModel.arrivalDestination"
+										type= "text" class= "form-control text-uppercase" 
+										data-uppercased
+										placeholder= "ARRIVAL DESTINATION"/>
+								</div>
+							</div>
+							
+							<div class= "form-group">								
+								<div class= "col-md-12">
+									<button ng-click="newArrivalData()" ng-disabled="arrivalForm.$invalid" class="btn btn-primary">Save Changes</button>
+									<!--
+									<button ng-click="cancelArrivalData()" class="btn btn-warning">Cancel Changes</button>
+									-->
+								</div>
+							</div>
+							
+					</form>
+
+				</div>
+			</div>
+		</div>	
+	</div>
+	<!-- /.row -->
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<i class="fa fa-flag fa-2x"></i>
+					Arrivals
+					<div class="pull-right">						
+						<button ng-click="refreshTable()" type="button" class="btn btn-primary">				
+							<i> Refresh </i><i class="fa fa-refresh "></i> 
+						</button>
+					</div>
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<table width="100%" class="table table-responsive table-striped table-bordered table-hover" id="arrivalTable">
+						<thead>
+							<tr>
+								<th>Arrival Date/Time</th> 
+								<th>Plate No.</th>
+								<th>Body No.</th>
+								<th>Bus Company</th>
+								<th>Origin</th>
+								<th>Destination</th>
+								<th>TP No.</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>							
+						</tbody>
+
+					</table>
+					<!-- /.table-responsive -->
+
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+
+
+</div>

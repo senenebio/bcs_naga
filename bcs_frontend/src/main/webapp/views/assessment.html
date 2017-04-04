@@ -1,0 +1,364 @@
+
+<ng-include src=" 'views/navigation.html' "></ng-include>
+
+<div class="container">
+
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="panel panel-primary" name="editPanel" id="editPanel" ng-show="isEditPanelVisible">
+				<div class="panel-heading">
+					Close
+					<button ng-click="closeEditPanel()" type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa fa-times"></i> 
+					</button>
+				</div>
+				<div class="panel-body">
+					<div class="panel panel-primary">
+						<div class="panel-body">
+							<div class= "form-group">									
+									<div class="row"> 
+										<label class="col-md-2"> Terminal Pass ID</label> 
+										<div class="col-md-2 bcs_border">{{tpCurrent.id}}</div>
+										
+										<label class="col-md-2">Vehicle ID </label> 
+										<div class="col-md-4 bcs_border">{{tpCurrent.plateNumber}} {{tpCurrent.busCompany}} {{tpCurrent.bodyNumber}}</div>
+									</div>									
+									<div class="row"> 
+										<label class="col-md-2">From/To</label>
+										<div class="col-md-4 bcs_border">{{tpCurrent.tripOrigin || "UNASSIGNED"}} {{tpCurrent.tripDestination || "UNASSIGNED"}}</div>
+										
+										<label class="col-md-1">Fees</label> 
+										<div class="col-md-2 bcs_border">{{tpCurrent.tripTerminalFee + tpCurrent.tripParkingFee || "FREE"}}</div>
+									</div>									
+									<div class="row"> 
+										<label class="col-md-2">Trip Details</label> 
+										<div class="col-md-5 bcs_border">{{tpCurrent.tripType}} {{tpCurrent.tripCoverage}} {{tpCurrent.status}} </div>
+										
+										<label class="col-md-2">Assessed By</label>
+										<div class="col-md-3 bcs_border">{{tpCurrent.tripAssessor || "UNASSESSED"}}</div>
+									</div>
+									<div class="row"> 
+										
+									</div>
+									<div class="row">
+										
+									</div>
+								
+							</div>
+						</div>
+					</div>
+				
+					<div class="panel panel-primary">
+						<div class="panel-body">
+						
+							<uib-tabset type="pills" active="active">
+								<uib-tab index="0">
+									<uib-tab-heading>
+										<i class="fa fa-arrow-circle-right"></i> Arrival
+									</uib-tab-heading>
+									<form role="form" id="arrivalForm" name="arrivalForm" class="form-horizontal alert" novalidate >
+										<div class= "form-group">												
+											<label class="col-md-1"> Arrival Time </label>
+											<div class="col-md-4 input-group date">
+												<input id="datetimepickerArrivalTime" name="arrivalTime" ng-model="tpCurrent.arrivalTime"
+													type= "text" class= "form-control text-uppercase" 
+													data-date-time-picker
+													placeholder= "YYYY-MM-DD HH:mm AM/PM" required />
+												<span class="input-group-addon">
+													<span class="fa fa-calendar"></span>
+												</span>
+											</div>
+										</div>
+										<div class= "form-group">
+											<label class="col-md-1"> Origin </label>
+											<div class="col-md-4">
+												<input name="arrivalOrigin" ng-model="tpCurrent.arrivalOrigin"
+													type= "text" class= "form-control text-uppercase" data-uppercased 
+													placeholder= "ARRIVAL ORIGIN" />
+											</div>												
+											<label class="col-md-1"> Destn </label>
+											<div class="col-md-4">
+												<input name="arrivalDestination" ng-model="tpCurrent.arrivalDestination"
+													type= "text" class= "form-control text-uppercase" data-uppercased
+													placeholder= "ARRIVAL DESTINATION" />
+											</div>
+										</div>
+										<div class= "form-group">								
+											<div class= "col-md-12">
+												<button ng-click="saveArrival()" ng-disabled="arrivalForm.$pristine || arrivalForm.$invalid" 
+													class="btn btn-primary">Save Changes</button>
+												<button ng-click="todo()" 
+													ng-disabled="arrivalForm.$pristine || !arrivalForm.$dirty"
+													class="btn btn-warning">Cancel Changes</button>
+											</div>
+										</div>
+									</form>
+								</uib-tab>
+								
+								<uib-tab index="1">
+									<uib-tab-heading>
+										<i class="fa fa-arrow-circle-right"></i> Unloading
+									</uib-tab-heading>
+									<form role="form" id="unloadingForm" name="unloadingForm" class="form-horizontal alert" novalidate >
+									
+										<div class= "form-group">
+											<label class= "col-md-1"> Unloading BAY </label>
+											<div class="col-md-2">
+												<input ng-model="tpCurrent.tripUnloadingBay" type= "text"  
+													class= "form-control text-uppercase" 
+													placeholder= "-" required/>
+											</div>
+										</div>
+										<div class= "form-group">
+											<label class= "col-md-1"> Start Unload Time </label>
+											<div class="col-md-4 input-group date">
+												<input id="dataTimePickerUnloadingStart" ng-model="tpCurrent.tripUnloadingStart" 
+													type= "text" class= "form-control text-uppercase" 
+													data-date-time-picker
+													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
+												<span class="input-group-addon">
+													<span class="fa fa-calendar"></span>
+												</span>
+											</div>	
+										</div>
+										<div class= "form-group">	
+											<label class= "col-md-1"> End Unload Time </label>
+											<div class="col-md-4 input-group date">
+												<input id="dataTimePickerUnloadingEnd" ng-model="tpCurrent.tripUnloadingEnd" 
+													type= "text" class= "form-control text-uppercase" 
+													data-date-time-picker
+													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
+												<span class="input-group-addon">
+													<span class="fa fa-calendar"></span>
+												</span>
+											</div>
+										</div>
+										<div class= "form-group">								
+											<div class= "col-md-12">
+												<button ng-click="saveUnloading()" ng-disabled="unloadingForm.$pristine || unloadingForm.$invalid" 
+													class="btn btn-primary">Save Changes</button>
+												<button ng-click="todo()" 
+													ng-disabled="unloadingForm.$pristine || !unloadingForm.$dirty"
+													class="btn btn-warning">Cancel Changes</button>
+											</div>
+										</div>
+									</form>
+
+								</uib-tab>
+								
+								<uib-tab index="2">
+									<uib-tab-heading>
+										<i class="fa fa-arrow-circle-right"></i> Loading
+									</uib-tab-heading>
+									<form role="form" id="loadingForm" name="loadingForm" class="form-horizontal alert" novalidate >
+									
+										<div class= "form-group">
+											<label class= "col-md-1"> Loading BAY </label>
+											<div class="col-md-2">
+												<input ng-model="tpCurrent.tripLoadingBay" type= "text" 
+													class= "form-control text-uppercase" 
+													placeholder= "-" required/>
+											</div>
+										</div>
+										<div class= "form-group">
+											<label class= "col-md-1"> Start Load Time </label>
+											<div class="col-md-4 input-group date">
+												<input id="datePickerLoadingStart" ng-model="tpCurrent.tripLoadingStart" 
+													type= "text" class= "form-control text-uppercase" 
+													data-date-time-picker
+													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
+												<span class="input-group-addon">
+													<span class="fa fa-calendar"></span>
+												</span>
+											</div>
+										</div>	
+										<div class= "form-group">
+											<label class= "col-md-1"> End Load Time </label>
+											<div class="col-md-4 input-group date">
+												<input id="datePickerLoadingEnd" ng-model="tpCurrent.tripLoadingEnd" 
+													type= "text" class= "form-control text-uppercase" 
+													data-date-time-picker
+													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
+												<span class="input-group-addon">
+													<span class="fa fa-calendar"></span>
+												</span>
+											</div>
+										</div>
+										<div class= "form-group">								
+											<div class= "col-md-12">
+												<button ng-click="saveLoading()" 
+													ng-disabled="loadingForm.$pristine || loadingForm.$invalid" 
+													class="btn btn-primary">Save Changes</button>
+												<button ng-click="todo()" 
+													ng-disabled="loadingForm.$pristine || !loadingForm.$dirty"
+													class="btn btn-warning">Cancel Changes</button>
+											</div>
+										</div>
+									</form>
+								</uib-tab>
+								
+								
+								<uib-tab index="3">
+									<uib-tab-heading>
+										<i class="fa fa-arrow-circle-right"></i> Trip Details
+									</uib-tab-heading>
+									<form role="form" id="tripDetailsForm" name="tripDetailsForm" class="form-horizontal alert" novalidate >
+									
+										<div class="form-group">
+											<label class="col-md-1"> Trip Type </label>
+											<div class="col-md-4">
+												<select required ng-model="tpCurrent.tripType" 
+														ng-init="tpCurrent.tripType" 
+														class= "form-control">
+													<option>PASS-THRU</option>
+													<option>PICK-UP</option>
+													<option>ORIGINATING</option>
+												</select>
+											</div>
+											
+											<label class="col-md-1"> Trip Coverage </label>
+											<div class="col-md-4">
+												<select required ng-model="tpCurrent.tripCoverage" 
+														ng-init="tpCurrent.tripCoverage"
+														class= "form-control">
+													<option>MNL/VIS/MIN</option>
+													<option>REGIONAL TRIP</option>												
+												</select>
+											</div>
+										</div>
+										
+										<div class= "form-group">
+											<label class="col-md-1"> Origin </label>
+											<div class="col-md-4">
+												<input ng-model="tpCurrent.tripOrigin" type= "text" 
+													class="form-control text-uppercase" 
+													data-uppercased
+													placeholder= "TRIP ORIGIN" required/>
+											</div>										
+
+											<label class= "col-md-1"> Dest </label>
+											<div class= "col-md-4">
+												<input ng-model="tpCurrent.tripDestination" type= "text" 
+													class="form-control text-uppercase" 
+													data-uppercased
+													placeholder= "TRIP DESTINATION" required/>
+											</div>
+										</div>
+										<div class= "form-group">								
+											<div class= "col-md-12">
+												<button ng-click="saveTripDetails()" 
+													ng-disabled="tripDetailsForm.$pristine || tripDetailsForm.$invalid" 
+													class="btn btn-primary">Save Changes</button>
+												<button ng-click="todo()" 
+													ng-disabled="tripDetailsForm.$pristine || !tripDetailsForm.$dirty"
+													class="btn btn-warning">Cancel Changes</button>
+											</div>
+										</div>
+									</form>
+								</uib-tab>
+								
+								<uib-tab index="4">
+									<uib-tab-heading>
+										<i class="fa fa-arrow-circle-right"></i> Fees
+									</uib-tab-heading>
+									<form role="form" id="feesForm" name="feesForm" class="form-horizontal alert" novalidate >
+									
+										<div class="form-group">											
+											<label class="col-md-2">TERMINAL FEE</label>
+											<div class="col-md-4">
+												<input ng-model="tpCurrent.tripTerminalFee" type= "number" 
+													class= "form-control text-right" 
+													placeholder= "FREE" required/>
+											</div>
+										</div>
+
+										<div class="form-group">											
+											<label class="col-md-2">PARKING FEE</label>
+											<div class="col-md-4">
+												<input ng-model="tpCurrent.tripParkingFee" type= "number" 
+													class= "form-control text-right" 
+													placeholder= "FREE" required/>
+											</div>
+										</div>
+
+										<div class="form-group">											
+											<label class="col-md-2">TOTAL PHP</label>
+											<div class="col-md-4">
+												<!--
+												<input ng-bind="{{tpCurrent.tripTerminalFee + tpCurrent.tripParkingFee}}" 
+													type= "number" class= "form-control text-right" 
+													placeholder= "FREE" readonly/>
+												-->
+												<div class="bcs_border">{{tpCurrent.tripTerminalFee + tpCurrent.tripParkingFee || "FREE"}}</div>
+									
+											</div>
+										</div>
+										<div class= "form-group">								
+											<div class= "col-md-12">
+												<button ng-click="saveFees()" ng-disabled="feesForm.$pristine || feesForm.$invalid" 
+													class="btn btn-primary">Save Changes</button>
+												<button ng-click="todo()" 
+													ng-disabled="feesForm.$pristine || !feesForm.$dirty"
+													class="btn btn-warning">Cancel Changes</button>
+											</div>
+										</div>
+									</form>
+								</uib-tab>
+							</uib-tabset>
+							
+						</div>
+						<!--panel-body -->
+						</div>
+				</div>
+
+			</div>
+			<!-- panel -->
+		</div>	
+	</div>
+	<!-- /.row -->
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<i class="fa fa-tasks fa-2x"></i>
+					Assessment
+					<div class="pull-right">						
+						<button ng-click="refreshTable()" type="button" class="btn btn-primary">				
+							<i> Refresh </i><i class="fa fa-refresh"></i> 
+						</button>
+					</div>
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<table width="100%" class="table table-responsive table-striped table-bordered table-hover" id="assessmentTable">
+						<thead>
+							<tr>
+								<th>TP No.</th>
+								<th>Arrival Date/Time</th>
+								<th>Plate No.</th>								
+								<th>Bus Company</th>
+								<th>Origin</th>
+								<th>Destination</th>								
+								<th>Assessor</th>
+								<th>Status</th>
+								<th>...</th>								
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+
+					</table>
+					<!-- /.table-responsive -->
+
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+
+
+</div>

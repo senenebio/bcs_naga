@@ -1,0 +1,159 @@
+
+<ng-include src=" 'views/navigation.html' "></ng-include>
+
+<div class="container">
+
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="panel panel-primary" name="editPanel" id="editPanel" ng-show="isEditPanelVisible">
+				<div class="panel-heading">
+					Close
+					<button ng-click="cancelUpdateVehicleData()()" type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa fa-times"></i> 
+					</button>
+				</div>
+				<div class="panel-body">
+					<form role="form" id="vehicleForm" name="vehicleForm" class="form-horizontal alert" novalidate >
+						<div class="row">
+							<div class= "form-group">								
+								<label class="col-md-2"> Plate No. </label>
+								<div class="col-md-2">
+									<input name="plateNumber" 
+										ng-model="vehicleModel.plateNumber" 
+										type="text" class="form-control text-uppercase" 
+										placeholder="Plate #" required/>									
+								</div>
+								
+								<label class="col-md-2"> Body Number </label>
+								<div class="col-md-2">
+									<input name="bodyNumber" 
+										ng-model="vehicleModel.bodyNumber"
+										type= "text" class= "form-control text-uppercase" placeholder="BODY #"/>									
+								</div>
+								
+							</div>
+							<div class= "form-group">
+								<label class="col-md-2"> Bus Company </label>									
+								<div class="col-md-6">
+									<input name="busCompany" 
+										ng-model="vehicleModel.busCompany"
+										type= "text" class= "form-control text-uppercase" placeholder= "BUS COMPANY"/>
+								</div>
+							</div>
+							<div class= "form-group">
+								<label class="col-md-2"> Make/Model. </label>								
+								<div class="col-md-4">
+									<input name="makeModel" 
+										ng-model="vehicleModel.makeModel"
+										type="text" class="col-xs-4 form-control text-uppercase" 
+										placeholder="MAKE/MODEL" />
+								</div>
+								<label class="col-md-2"> Motor No. </label>
+								<div class="col-md-4">
+									<input name="motorNumber" 
+										ng-model="vehicleModel.motorNumber"
+										type= "text" class= "form-control text-uppercase" 
+										placeholder= "MOTOR NUMBER"/>
+								</div>
+								
+								<label class="col-md-2"> Chassis No. </label>
+								<div class="col-md-4">
+									<input name="chassisNumber" 
+										ng-model="vehicleModel.chassisNumber"
+										type= "text" class= "form-control text-uppercase" 
+										placeholder= "CHASSIS NUMBER"/>
+								</div>
+								
+								<label class="col-md-2"> CASE No. </label>
+								<div class="col-md-4">
+									<input name="caseNumber" 
+										ng-model="vehicleModel.caseNumber"
+										type= "text" class= "form-control text-uppercase" 
+										placeholder= "CASE NUMBER"/>
+								</div>
+							</div>
+							
+							<div class= "form-group">								
+								<div class= "col-md-12">
+									<button ng-click="saveVehicle()" ng-disabled="vehicleForm.$invalid" class="btn btn-primary">Save Changes</button>
+									<button ng-click="cancelUpdateVehicleData()" class="btn btn-warning">Cancel Changes</button>
+								</div>
+							</div>
+							
+					</form>
+
+				</div>
+			</div>
+		</div>	
+	</div>
+	<!-- /.row -->
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<i class="fa fa-truck fa-2x"></i>
+					Registered Vehicles
+					
+					<span class="pull-right">
+						<span>						
+							<button ng-click="populateNewVehicleData()" type="button" class="btn btn-info btn-circle">				
+								<i class="fa fa-plus"></i> 
+							</button>
+							<i> New Vehicle </i>
+						</span>
+						<span>&nbsp; &nbsp; &nbsp;</span>
+						<span>						
+							<button ng-click="refreshTable()" type="button" class="btn btn-primary">				
+								<i> Refresh </i><i class="fa fa-refresh"></i> 
+							</button>
+						</span>
+					</span>
+					
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<table width="100%" class="table table-responsive table-striped table-bordered table-hover" id="vehicleTable">
+						<thead>
+							<tr>
+								<th>Plate No.</th>
+								<th>Body No.</th>
+								<th>Bus Company</th>
+								<th>Make/Model</th>
+								<th>Motor No.</th>
+								<th>Chassis No.</th>
+								<th>Case No.</th>
+								<th>...</th>
+								<th>...</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--
+							<tr ng-repeat="v in undepartedVehicles">							
+								<td>{{v.terminalPass.vehicleTime | date:'yyyy-MM-dd HH:mma'}}</td>
+								<td>{{v.terminalPass.plateNumber}}</td>
+								<td>{{v.terminalPass.bodyNumber}}</td>
+								<td>{{v.terminalPass.busCompany}}</td>
+								<td>{{v.terminalPass.tripOrigin}} || {{v.terminalPass.vehicleOrigin}}</td>
+								<td>{{v.terminalPass.tripDestination}} || {{v.terminalPass.vehicleDestination}}</td>
+								<td>{{v.terminalPass.id}}</td>
+								<td>{{v.terminalPass.status}}</td>
+							</tr>
+							-->
+						</tbody>
+
+					</table>
+					<!-- /.table-responsive -->
+
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+
+
+</div>
