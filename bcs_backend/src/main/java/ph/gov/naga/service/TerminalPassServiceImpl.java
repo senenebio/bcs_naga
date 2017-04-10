@@ -65,6 +65,7 @@ public class TerminalPassServiceImpl implements TerminalPassService {
     @Override
     public void delete(Long id) {
         terminalPassRepository.delete(id);
+        terminalPassRepository.flush();
     }
 
     @Override

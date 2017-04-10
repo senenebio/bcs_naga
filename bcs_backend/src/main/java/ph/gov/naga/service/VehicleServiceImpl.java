@@ -66,6 +66,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void delete(Long id) {
         vehicleRepository.delete(id);
+        vehicleRepository.flush();
     }
 
     @Override

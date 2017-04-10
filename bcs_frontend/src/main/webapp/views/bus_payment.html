@@ -3,8 +3,8 @@
 
 <div class="container">
 
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+	<div class="row">		
+		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-primary" name="editPanel" id="editPanel" ng-show="isEditPanelVisible">
 				<div class="panel-heading">
 					Close
@@ -15,66 +15,129 @@
 				<div class="panel-body">
 					<form role="form" id="busPaymentForm" name="busPaymentForm" class="form-horizontal alert" novalidate >
 						<div class="row">
-							<div class= "form-group">								
-								<label class="col-md-2"> Plate Number </label>
-								<div class="col-md-2">
-									<input name="plateNumber" ng-model="tpModel.plateNumber" 
-										type="text" class="form-control text-uppercase" 
-										placeholder="Plate #" required readonly/>									
-								</div>
-								<label class="col-md-2"> BusPayment Time </label>								
-								<div class="col-md-4 input-group date">
-									<input id="datetimepickerApprovedTime" name="approvedTime" ng-model="tpModel.approvedTime"
+							<div class= "form-group">
+							
+								<label class="col-md-2"> OR NUMBER</label>																					
+								<div class="col-md-3">
+									<div class="input-group">
+										<input id="origReceipNumber" name="origReceipNumber" ng-model="paymentModel.origReceiptNumber"
+											type="text" class="form-control text-uppercase"
+											data-uppercased
+											placeholder="OR Number" required/>
+										<span class="input-group-addon" ng-click="fetchORFromEtracs()">
+											<span class="fa fa-link"></span>
+										</span>
+									</div>
+								</div>								
+								<label class="col-md-2"> Transaction Time </label>								
+								<div class="col-md-3 input-group date">
+									<input id="datetimepickerOrigReceiptDate" name="origReceiptDate" ng-model="paymentModel.origReceiptDate"
 										type="text" class="form-control text-uppercase"
 										data-date-time-picker
 										placeholder="YYYY-MM-DD HH:mm AM/PM" required/>
 										<span class="input-group-addon">
 											<span class="fa fa-calendar"></span>
 										</span>
-								</div>
-								
+								</div>								
 							</div>
-							<div class= "form-group">								
-								<label class="col-md-2"> Body Number </label>
-								<div class="col-md-2">
-									<input name="bodyNumber" ng-model="tpModel.bodyNumber"
-										type= "text" class="form-control text-uppercase" 
-										placeholder="BODY #" readonly/>									
-								</div>
-								
-								<label class="col-md-2"> Bus Company </label>
-									
+							<div class= "form-group">							
+								<label class="col-md-2"> Paid By </label>								
 								<div class="col-md-4">
-									<input name="busCompany" ng-model="tpModel.busCompany"
-										type= "text" class= "form-control text-uppercase" 
-										placeholder= "BUS COMPANY" readonly/>
+									<input id="paidBy" name="paidBy" ng-model="paymentModel.paidBy"
+										type="text" class="form-control text-uppercase"
+										data-uppercased
+										placeholder="PAID BY" required/>										
+								</div>
+								<label class="col-md-2"> Address </label>								
+								<div class="col-md-4">
+									<input id="paidByAddress" name="paidByAddress" ng-model="paymentModel.paidByAddress"
+										type="text" class="form-control text-uppercase"
+										data-uppercased
+										placeholder="ADDRESS" required/>										
 								</div>
 							</div>
-							<div class= "form-group">								
-								
-								<label class="col-md-2"> Origin </label>
-								<div class="col-md-4">
-									<input name="busPaymentOrigin" ng-model="tpModel.tripOrigin"
-										type= "text" class= "form-control text-uppercase" 
-										placeholder= "ORIGIN" readonly/>
+							
+							<div class= "form-group">							
+								<label class="col-md-2"> Terminal Fee </label>								
+								<div class="col-md-3">
+									<input id="terminalFee" name="terminalFee" ng-model="terminalFee"
+										type="number" class="form-control text-uppercase text-right"										
+										placeholder="FREE" required/>										
 								</div>
-								
-								<label class="col-md-2"> Destination </label>
-								<div class="col-md-4">
-									<input name="busPaymentDestination" ng-model="tpModel.tripDestination"
-										type= "text" class= "form-control text-uppercase" 
-										placeholder= "DESTINATION" readonly/>
+							</div>
+							<div class= "form-group">							
+								<label class="col-md-2"> Parking Fee </label>								
+								<div class="col-md-3">
+									<input id="parkingFee" name="parkingFee" ng-model="parkingFee"
+										type="number" class="form-control text-uppercase text-right"										
+										placeholder="FREE" required/>										
 								</div>
 							</div>
 							
 							<div class= "form-group">								
 								<div class= "col-md-12">
-									<button ng-click="saveBusPaymentData()" ng-disabled="busPaymentForm.$invalid" class="btn btn-primary">Save Changes</button>
+									<button ng-click="saveBusPaymentData()" ng-disabled="busPaymentForm.$invalid" class="btn btn-primary">Save Payment</button>
+									<button ng-click="todo()" ng-disabled="busPaymentForm.$invalid" class="btn btn-primary">Print</button>
+									<button ng-click="todo()" ng-disabled="busPaymentForm.$invalid" class="btn btn-primary">Post to Etracs</button>
+									<button ng-click="todo()" ng-disabled="busPaymentForm.$invalid" class="btn btn-primary">Cancel</button>									
 									<!--
 									<button ng-click="cancelBusPaymentData()" class="btn btn-warning">Cancel Changes</button>
 									-->
 								</div>
 							</div>
+							
+							<div class="thumbnail">
+							
+								<div class= "form-group">
+									<label class="col-md-2"> TP Number </label>
+									<div class="col-md-2">
+										<input name="id" ng-model="tpModel.id" 
+											type="text" class="form-control text-uppercase" 
+											placeholder="Plate #" readonly/>									
+									</div>
+								
+									<label class="col-md-2"> Plate Number </label>
+									<div class="col-md-2">
+										<input name="plateNumber" ng-model="tpModel.plateNumber" 
+											type="text" class="form-control text-uppercase" 
+											placeholder="Plate #" required readonly/>									
+									</div>
+								</div>
+								
+								<div class= "form-group">	
+									<label class="col-md-2"> Body Number </label>
+									<div class="col-md-2">
+										<input name="bodyNumber" ng-model="tpModel.bodyNumber"
+											type= "text" class="form-control text-uppercase" 
+											placeholder="BODY #" readonly/>									
+									</div>
+									
+									<label class="col-md-2"> Bus Company </label>
+										
+									<div class="col-md-4">
+										<input name="busCompany" ng-model="tpModel.busCompany"
+											type= "text" class= "form-control text-uppercase" 
+											placeholder= "BUS COMPANY" readonly/>
+									</div>
+								</div>
+								<div class= "form-group">								
+									
+									<label class="col-md-2"> Origin </label>
+									<div class="col-md-4">
+										<input name="busPaymentOrigin" ng-model="tpModel.tripOrigin"
+											type= "text" class= "form-control text-uppercase" 
+											placeholder= "ORIGIN" readonly/>
+									</div>
+									
+									<label class="col-md-2"> Destination </label>
+									<div class="col-md-4">
+										<input name="busPaymentDestination" ng-model="tpModel.tripDestination"
+											type= "text" class= "form-control text-uppercase" 
+											placeholder= "DESTINATION" readonly/>
+									</div>
+								</div>
+							</div>
+							
 							
 					</form>
 

@@ -87,7 +87,7 @@ app.factory("departureService", ['$http', 'appconfigService', function($http, ap
 
 
 app.factory("busPaymentService", ['$http', 'appconfigService', function($http, appconfigService) {
-	var serviceBase = appconfigService.bcs_backend_url + '/public/api/terminal_payment/'
+	var serviceBase = appconfigService.bcs_backend_url + '/public/api/bus_payment/'
     var obj = {};
 	
     obj.findAllUndeparted = function(){
@@ -99,12 +99,20 @@ app.factory("busPaymentService", ['$http', 'appconfigService', function($http, a
     }
 		
     obj.newPayment = function (busPaymentData) {
-		return $http.post(serviceBase, approvalData);
+		return $http.post(serviceBase, busPaymentData);
+	};
+	
+	obj.updatePayment = function (id, busPaymentData) {
+		return $http.put(serviceBase + id, busPaymentData);
 	};
 
 	obj.deletePayment = function (id) {
 		return $http.delete(serviceBase + id);
 	};	
+	
+	obj.findTerminalPassById = function (id) {
+		return $http.get(serviceBase + 'findTerminalPassById/' +id);
+	};
 
     return obj;   
 }]);
@@ -198,10 +206,87 @@ app.factory('authorizationService', ['$window', function ($window) {
 
 
 //injectable configuration
-app.factory('appconfigService', ['$window', function ($window) {
+app.factory('appconfigService', [ function () {
 	var obj = {};
+	
 	obj.bcs_backend_url = 'http://localhost:8091';
 	obj.etracks_url = 'http://localhost:8092';
+	
+	//fields here
+	obj.tpObjectFactory = function () {
+		//json passed in request body
+		var tpObject = {
+			//common
+			id : null,
+			
+			//arrival
+			plateNumber : null,  
+			bodyNumber  : null,
+			busCompany  : null,
+			arrivalTime : null,
+			arrivalOrigin      : null,
+			arrivalDestination : null,
+			arrivalRecorder    : null,
+			
+			//assessment
+			tripType        : null,
+			tripCoverage    : null,
+			tripOrigin      : null,
+			tripDestination : null,
+						
+			tripUnloadingBay   : null,
+			tripUnloadingStart : null, 
+			tripUnloadingEnd   : null,
+			
+			tripLoadingBay   : null,
+			tripLoadingStart : null,
+			tripLoadingEnd   : null,
+						
+			tripTerminalFee : null,
+			tripParkingFee  : null,			
+			tripAssessor    : null,
+			
+			//payment
+			paymentIdNumber : null,
+			
+			//approval
+			approvedBy   : null,
+			approvedTime : null,
+			
+			//common
+			status       : null,			
+		};
+		return tpObject;
+	};
+	
+	//fields here
+	obj.paymentObjectFactory = function () {
+		var pObject = {
+			id: null,
+			origReceiptNumber: null,
+			origReceiptDate: null,
+			paidBy: null,
+			paidByAddress: null,
+			collectedBy: null,
+			etracsObjectId: null,
+			etracsPostDate: null,
+			paymentItems: [],
+						
+		};		
+		return pObject;
+	};
+	
+	//fields here
+	obj.paymentItemObjectFactory = function () {
+		var pItemObject = {			
+			id: null,
+			itemCode: null,
+			itemTitle: null,
+			amount: 0,
+			paymentId: null,
+		};		
+		return pItemObject;
+	};
 	
 	return obj;
 }]);

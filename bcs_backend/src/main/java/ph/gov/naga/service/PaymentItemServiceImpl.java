@@ -52,6 +52,7 @@ public class PaymentItemServiceImpl implements PaymentItemService {
     @Override
     public void delete(Long id) {
         paymentItemRepository.delete(id);
+        paymentItemRepository.flush();
     }
     
 }

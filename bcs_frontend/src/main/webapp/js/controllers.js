@@ -163,7 +163,7 @@ app.controller('ArrivalCtrl', function($rootScope, $scope, $http, $filter,
 	};
 	
 	function initModel(src) {
-		$scope.tpModel = $rootScope.tpObjectFactory();
+		$scope.tpModel = appconfigService.tpObjectFactory();
 		if (src) {
 			$scope.tpModel = angular.copy(src)
 			//take care of time values
@@ -272,12 +272,12 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			//simulate a patch by populating only the columns we changed
 			var tpObject = {};
-			tpObject.id = $scope.tpCurrent.id;
-			tpObject.plateNumber = $scope.tpCurrent.plateNumber;			
-			tpObject.arrivalTime = moment($scope.tpCurrent.arrivalTime, 
+			tpObject.id = $scope.tpModel.id;
+			tpObject.plateNumber = $scope.tpModel.plateNumber;			
+			tpObject.arrivalTime = moment($scope.tpModel.arrivalTime, 
 				'YYYY-MM-DD HH:mm').toDate();
-			tpObject.arrivalOrigin = $scope.tpCurrent.arrivalOrigin;
-			tpObject.arrivalDestination = $scope.tpCurrent.arrivalDestination;
+			tpObject.arrivalOrigin = $scope.tpModel.arrivalOrigin;
+			tpObject.arrivalDestination = $scope.tpModel.arrivalDestination;
 			
 			//from authorization service
 			tpObject.arrivalRecorder = authorizationService.profile.username;
@@ -285,7 +285,7 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			var assessmentData = {terminalPass : tpObject};
 			//call service to save data			
-			assessmentService.saveArrival($scope.tpCurrent.id, assessmentData)
+			assessmentService.saveArrival($scope.tpModel.id, assessmentData)
 			.then(function(response){
 				swal('Success!', 'Arrival successfully saved.', 'success');
 				initModel(response.data.terminalPass);
@@ -310,13 +310,13 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			//simulate a patch by populating only the columns we need
 			var tpObject = {};
-			tpObject.id = $scope.tpCurrent.id;
-			tpObject.plateNumber = $scope.tpCurrent.plateNumber;
-			tpObject.tripUnloadingBay = $scope.tpCurrent.tripUnloadingBay;
+			tpObject.id = $scope.tpModel.id;
+			tpObject.plateNumber = $scope.tpModel.plateNumber;
+			tpObject.tripUnloadingBay = $scope.tpModel.tripUnloadingBay;
 			//take care of dates
-			tpObject.tripUnloadingStart = moment($scope.tpCurrent.tripUnloadingStart, 
+			tpObject.tripUnloadingStart = moment($scope.tpModel.tripUnloadingStart, 
 				'YYYY-MM-DD HH:mm').toDate();
-			tpObject.tripUnloadingEnd = moment($scope.tpCurrent.tripUnloadingEnd,
+			tpObject.tripUnloadingEnd = moment($scope.tpModel.tripUnloadingEnd,
 				'YYYY-MM-DD HH:mm').toDate();
 						
 			//from authorization service
@@ -324,7 +324,7 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			//call service to save data				
 			var assessmentData = {terminalPass : tpObject};			
-			assessmentService.saveUnloading($scope.tpCurrent.id, assessmentData)
+			assessmentService.saveUnloading($scope.tpModel.id, assessmentData)
 			.then(function(response){
 				swal('Success!', 'Unloading data successfully saved.', 'success');
 				initModel(response.data.terminalPass);
@@ -349,19 +349,19 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			//simulate a patch by populating only the columns we need
 			var tpObject = {};
-			tpObject.id = $scope.tpCurrent.id;
-			tpObject.plateNumber = $scope.tpCurrent.plateNumber;
-			tpObject.tripLoadingBay = $scope.tpCurrent.tripLoadingBay;
-			tpObject.tripLoadingStart = moment($scope.tpCurrent.tripLoadingStart,
+			tpObject.id = $scope.tpModel.id;
+			tpObject.plateNumber = $scope.tpModel.plateNumber;
+			tpObject.tripLoadingBay = $scope.tpModel.tripLoadingBay;
+			tpObject.tripLoadingStart = moment($scope.tpModel.tripLoadingStart,
 				'YYYY-MM-DD HH:mm').toDate();
-			tpObject.tripLoadingEnd = moment($scope.tpCurrent.tripLoadingEnd,
+			tpObject.tripLoadingEnd = moment($scope.tpModel.tripLoadingEnd,
 				'YYYY-MM-DD HH:mm').toDate();						
 			//from authorization service
 			tpObject.tripAssessor = authorizationService.profile.username;
 			
 			//call service to save data
 			var assessmentData = {terminalPass : tpObject};
-			assessmentService.saveLoading($scope.tpCurrent.id, assessmentData)
+			assessmentService.saveLoading($scope.tpModel.id, assessmentData)
 			.then(function(response){
 				swal('Success!', 'Loading data successfully saved.', 'success');
 				initModel(response.data.terminalPass);
@@ -386,19 +386,19 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			//simulate a patch by populating only the columns we need
 			var tpObject = {};
-			tpObject.id = $scope.tpCurrent.id;
-			tpObject.plateNumber = $scope.tpCurrent.plateNumber;
+			tpObject.id = $scope.tpModel.id;
+			tpObject.plateNumber = $scope.tpModel.plateNumber;
 			
-			tpObject.tripType = $scope.tpCurrent.tripType;
-			tpObject.tripCoverage = $scope.tpCurrent.tripCoverage;
-			tpObject.tripOrigin = $scope.tpCurrent.tripOrigin;
-			tpObject.tripDestination = $scope.tpCurrent.tripDestination;
+			tpObject.tripType = $scope.tpModel.tripType;
+			tpObject.tripCoverage = $scope.tpModel.tripCoverage;
+			tpObject.tripOrigin = $scope.tpModel.tripOrigin;
+			tpObject.tripDestination = $scope.tpModel.tripDestination;
 						
 			//from authorization service
 			tpObject.tripAssessor = authorizationService.profile.username;
 			
 			var assessmentData = {terminalPass : tpObject};
-			assessmentService.saveTripDetails($scope.tpCurrent.id, assessmentData)
+			assessmentService.saveTripDetails($scope.tpModel.id, assessmentData)
 			.then(function(response){
 				swal('Success!', 'Trip details data successfully saved.', 'success');
 				initModel(response.data.terminalPass);
@@ -423,17 +423,17 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			//simulate a patch by populating only the columns we need
 			var tpObject = {};
-			tpObject.id = $scope.tpCurrent.id;
-			tpObject.plateNumber = $scope.tpCurrent.plateNumber;
+			tpObject.id = $scope.tpModel.id;
+			tpObject.plateNumber = $scope.tpModel.plateNumber;
 			
-			tpObject.tripTerminalFee = $scope.tpCurrent.tripTerminalFee;
-			tpObject.tripParkingFee = $scope.tpCurrent.tripParkingFee;
+			tpObject.tripTerminalFee = $scope.tpModel.tripTerminalFee;
+			tpObject.tripParkingFee = $scope.tpModel.tripParkingFee;
 						
 			//from authorization service
 			tpObject.tripAssessor = authorizationService.profile.username;
 			
 			var assessmentData = {terminalPass : tpObject};
-			assessmentService.saveFees($scope.tpCurrent.id, assessmentData)
+			assessmentService.saveFees($scope.tpModel.id, assessmentData)
 			.then(function(response){
 				swal('Success!', 'Fees data successfully saved.', 'success');
 				initModel(response.data.terminalPass);
@@ -457,28 +457,28 @@ app.controller('AssessmentCtrl', function($rootScope, $scope, $http, $filter, $c
 	
 	
 	function initModel(src) {		
-		$scope.tpCurrent = $rootScope.tpObjectFactory ();
+		$scope.tpModel = appconfigService.tpObjectFactory ();
 		if (src) {
-			$scope.tpCurrent = angular.copy(src);
+			$scope.tpModel = angular.copy(src);
 			
 			//datetime variables are always a pain
-			$scope.tpCurrent.arrivalTime = src.arrivalTime ? 
+			$scope.tpModel.arrivalTime = src.arrivalTime ? 
 				moment(src.arrivalTime).format('YYYY-MM-DD HH:mm A') :
 				null;
 				
-			$scope.tpCurrent.tripUnloadingStart = src.tripUnloadingStart ? 
+			$scope.tpModel.tripUnloadingStart = src.tripUnloadingStart ? 
 				moment(src.tripUnloadingStart).format('YYYY-MM-DD HH:mm A'):
 				null; 
 				
-			$scope.tpCurrent.tripUnloadingEnd   =  src.tripUnloadingEnd ? 
+			$scope.tpModel.tripUnloadingEnd   =  src.tripUnloadingEnd ? 
 				moment(src.tripUnloadingEnd).format('YYYY-MM-DD HH:mm A'):
 				null;
 			
-			$scope.tpCurrent.tripLoadingStart = src.tripLoadingStart ? 
+			$scope.tpModel.tripLoadingStart = src.tripLoadingStart ? 
 				moment(src.tripLoadingStart).format('YYYY-MM-DD HH:mm A') :
 				null;
 			
-			$scope.tpCurrent.tripLoadingEnd   = src.tripLoadingEnd ? 
+			$scope.tpModel.tripLoadingEnd   = src.tripLoadingEnd ? 
 				moment(src.tripLoadingEnd).format('YYYY-MM-DD HH:mm A') :
 				null;
 				
@@ -689,6 +689,8 @@ app.controller('VehicleCtrl', function($rootScope, $scope, $http, $filter, $comp
 		//for the data tables
 		$scope.datatable = $('#vehicleTable').DataTable({
 			"order": [[0, "asc"]],
+			"dom": 'lfr<B><t>ip', 
+			"buttons": ['excel'],
 			"responsive": true,
 			"createdRow": function(row, data, dataIndex) {
 				//make angular buttons clickable
@@ -739,9 +741,11 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 	//visibility of edit form
 	hideEditPanel();			
 	
-	//set-up
+	//set-up	
 	initModelTp();
 	initModelPayment();
+	initModelPaymentItem();
+	initVars();
 	
 	initBusPaymentDataTable();
 	findAllUndeparted();	
@@ -749,7 +753,7 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 		
 	$scope.saveBusPaymentData = function () {				
 		swal({
-			title: 'Save BusPayment data',
+			title: 'Save Bus Payment data',
 			type: 'question',
 			text: 'Please confirm.',
 			showCloseButton: true,
@@ -760,48 +764,139 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 			
 			hideEditPanel();
 			
+			var paymentObject = {};	
+			paymentObject.id = $scope.paymentModel.id;
+			paymentObject.origReceiptNumber = $scope.paymentModel.origReceiptNumber;
+			paymentObject.origReceiptDate = moment($scope.paymentModel.origReceiptDate,
+				'YYYY-MM-DD HH:mm A').toDate();
+			paymentObject.paidBy = 	$scope.paymentModel.paidBy;
+			paymentObject.paidByAddress = 	$scope.paymentModel.paidByAddress;
+			//from authorization service			
+			paymentObject.collectedBy = authorizationService.profile.username;
+			
+			//to do: payment items make this configurable
+			var paymentItems = [];
+			if ($scope.terminalFee) {
+				var tf = appconfigService.paymentItemObjectFactory();
+				tf.itemCode = "001";
+				tf.itemTitle = "TERMINAL FEE";
+				tf.amount = $scope.terminalFee;
+				paymentItems.push(tf);
+			}
+			if ($scope.parkingFee) {
+				var pf = appconfigService.paymentItemObjectFactory();
+				pf.itemCode = "002";
+				pf.itemTitle = "PARKING FEE";
+				pf.amount = $scope.parkingFee;
+				paymentItems.push(pf);
+			}
+			
 			var tpObject = {};
 			tpObject.id = $scope.tpModel.id;
 			tpObject.plateNumber = $scope.tpModel.plateNumber;
+			tpObject.status = "PAID";
 			
-			tpObject.approvedTine = moment($scope.tpModel.approvedTime,
-				'YYYY-MM-DD HH:mm A').toDate();
-			tpObject.status = "DEPARTED";
-			//from authorization service
-			tpObject.approvedBy = authorizationService.profile.username;
+			var busPaymentData = {terminalPass : tpObject, payment : paymentObject, paymentItems: paymentItems};
+			if ($scope.isNewPayment) {
+				
+				busPaymentService.newPayment(busPaymentData)
+				.then(function(response){
+					swal('Success!', 'New Bus Payment data successfully recorded.', 'success');
+					initModel(response.data);
+					$scope.refreshTable();
+				}, function(response){
+					swal('Opps!', 'Error encountered while saving data.', 'error');
+				});
+			} else {
+				busPaymentService.updatePayment(paymentObject.id, busPaymentData)
+				.then(function(response){
+					swal('Success!', 'Bus Payment data successfully updated.', 'success');
+					initModel(response.data);
+					$scope.refreshTable();
+				}, function(response){
+					swal('Opps!', 'Error encountered while saving data.', 'error');
+				});
+				
+			}
 			
-			var busPaymentData = {terminalPass : tpObject};
-			busPaymentService.updateBusPayment($scope.tpModel.id, busPaymentData)
-			.then(function(response){
-				swal('Success!', 'BusPayment data successfully recorded.', 'success');
-				initModel(response.data);
-				$scope.refreshTable();
-			}, function(response){
-				swal('Opps!', 'Error encountered while saving data.', 'error');
-			});
 		});
 			
 	};
 	
 	$scope.cancelBusPaymentData = function () {
 		initModelTp();
-		initModelPayment();
+		initModelPayment();		
 		hideEditPanel();		
-		clearSearch();
+		
 	};
 	
-	$scope.populateBusPaymentData = function (id) {
-		busPaymentService.findBusPaymentById(id)
-		.then(function(response){			
-			initModelTp(response.data.terminalPass);			
+	$scope.populateBusPaymentData = function (terminalPassId, paymentId) {
+		//find the parent terminal pass
+		busPaymentService.findTerminalPassById(terminalPassId)
+		.then(function(response){
+			initModelTp(response.data.terminalPass);
+			initModelPayment(response.data.terminalPass);
+			
+			var paymentItems = response.data.paymentItems;
+			
+			var assessedFees = $scope.tpModel.tripTerminalFee + $scope.tpModel.tripParkingFee;
+			if(!assessedFees) {
+				swal('Warning', 'Assessed Fees can not be determined.', 'warning');
+				return;
+			}
+			
+			if (paymentId) {				
+				//edit mode
+				busPaymentService.findBusPaymentById(paymentId)
+				.then(function(response){					
+					initModelPayment(response.data.payment);
+					
+					$scope.paymentModel.origReceiptDate = moment($scope.paymentModel.origReceiptDate)
+						.format('YYYY-MM-DD HH:mm A');
+					
+					//see if we found entries
+					if (angular.isArray(paymentItems)) {
+						paymentItems.forEach(function(item, index) {
+							//make this configurable
+							if (item.itemCode === "001") {
+								$scope.terminalFee = item.amount;
+							} else if (item.itemCode === "002"){
+								$scope.parkingFee = item.amount;
+							}
+							
+						});
+					}
+					showEditPanel();
+					
+			});
+			} else	{
+				$scope.isNewPayment = true;
+				
+				//add mode			
+				$scope.paymentModel.origReceiptDate = moment({}).format('YYYY-MM-DD HH:mm A');				
+				$scope.paymentModel.paidBy = $scope.tpModel.plateNumber;
+				$scope.paymentModel.paidByAddress = $scope.tpModel.busCompany;
+				
+				$scope.terminalFee = $scope.tpModel.tripTerminalFee;
+				$scope.parkingFee = $scope.tpModel.tripParkingFee;
+				
+				showEditPanel();
+			}
+						
+		},function(response){
+			swal('Warning', 'Data for TerminalPass ' + terminalPassId + ' is not available.', 'warning');
 		});
-		//show it anyway
-		showEditPanel();
+		
 	};	
 		
 	$scope.refreshTable = function () {
 		findAllUndeparted();
-	};	
+	};
+	
+	$scope.fetchORFromEtracs = function () {
+		swal("Warning", "Unable to fetch OR number from Etracs", "warning");
+	};
+
 	
 	
 	function showEditPanel() {
@@ -814,7 +909,7 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 
 	
 	function initModelTp(src) {		
-		$scope.tpModel = $rootScope.tpObjectFactory();
+		$scope.tpModel = appconfigService.tpObjectFactory();
 		if (src) {
 			$scope.tpModel = angular.copy(src);
 			//format dates, a real pain
@@ -824,8 +919,9 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 		} 
 	};
 	
+	
 	function initModelPayment(src) {		
-		$scope.tpModel = $rootScope.paymentObjectFactory();
+		$scope.paymentModel = appconfigService.paymentObjectFactory();
 		if (src) {
 			$scope.paymentModel = angular.copy(src);
 			//format dates, a real pain
@@ -836,7 +932,7 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 	};
 	
 	function initModelPaymentItem(src) {		
-		$scope.tpModel = $rootScope.paymentItemObjectFactory();
+		$scope.paymentItemModel = appconfigService.paymentItemObjectFactory();
 		if (src) {
 			$scope.paymentItemModel = angular.copy(src);
 			//format dates, a real pain
@@ -845,6 +941,13 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 			//	moment({}).format('YYYY-MM-DD HH:mm A');
 		} 
 	};
+	
+	function initVars() {		
+		$scope.terminalFee = 0;
+		$scope.parkingFee = 0;
+		$scope.isNewPayment = false;
+	};
+	
 	
 	
 	function initBusPaymentDataTable() {
@@ -864,19 +967,26 @@ app.controller('BusPaymentCtrl', function($rootScope, $scope, $http, $filter, $c
 		initBusPaymentDataTable();
 		$scope.datatable.clear();
 		$scope.undepartedVehicles.forEach(function(item){
-			var control = '<button ng-click="populateBusPaymentData(' + item.terminalPass.id + ')" ' + 
+			
+			var paymentId = item.terminalPass.paymentIdNumber;
+			var terminalPassId = item.terminalPass.id;
+			
+					
+			var control = '<button ng-click="populateBusPaymentData(' + terminalPassId + ',' + paymentId + ')" ' + 
 			              '   type="button" class="btn btn-info btn-circle"> '+
 						  '   <i class="fa fa fa-flash"></i> ' +
 						  ' </button>' ;
+
 			 
-			var isPaid = item.terminalPass.paymentIdNumber ? 
+			var isPaid =  paymentId ? 
 							'<center><i class="fa fa fa-check text-success"></center>' : 
 							'<center><i class="fa fa fa-times text-danger"></center>';
 							
 			var fees = item.terminalPass.tripTerminalFee + item.terminalPass.tripParkingFee ?
 							item.terminalPass.tripTerminalFee + item.terminalPass.tripParkingFee :
 							"FREE";
-			
+			fees = '<strong>' + fees + '</strong>';
+							
 			//12 columns
 			$scope.datatable.row.add([
 				item.terminalPass.id,
@@ -943,9 +1053,9 @@ app.controller('ApprovalCtrl', function($rootScope, $scope, $http, $filter, $com
 			tpObject.id = $scope.tpModel.id;
 			tpObject.plateNumber = $scope.tpModel.plateNumber;
 			
-			tpObject.approvedTine = moment($scope.tpModel.approvedTime,
+			tpObject.approvedTime = moment($scope.tpModel.approvedTime,
 				'YYYY-MM-DD HH:mm A').toDate();
-			tpObject.status = "DEPARTED";
+			tpObject.status = "APPROVED";
 			//from authorization service
 			tpObject.approvedBy = authorizationService.profile.username;
 			
@@ -993,7 +1103,7 @@ app.controller('ApprovalCtrl', function($rootScope, $scope, $http, $filter, $com
 
 	
 	function initModel(src) {		
-		$scope.tpModel = $rootScope.tpObjectFactory();
+		$scope.tpModel = appconfigService.tpObjectFactory();
 		if (src) {
 			$scope.tpModel = angular.copy(src);
 			//format dates, a real pain
@@ -1028,12 +1138,13 @@ app.controller('ApprovalCtrl', function($rootScope, $scope, $http, $filter, $com
 						  ' </button>' ;
 			 
 			var isPaid = item.terminalPass.paymentIdNumber ? 
-							'<i class="fa fa fa-check text-success">' : 
-							'<i class="fa fa fa-times text-danger">';
+							'<center><i class="fa fa fa-check text-success"></center>' : 
+							'<center><i class="fa fa fa-times text-danger"></center>';
 							
 			var fees = item.terminalPass.tripTerminalFee + item.terminalPass.tripParkingFee ?
 							item.terminalPass.tripTerminalFee + item.terminalPass.tripParkingFee :
 							"FREE";
+			fees = '<strong>' + fees + '</strong>';
 			
 			//12 columns
 			$scope.datatable.row.add([
@@ -1151,7 +1262,7 @@ app.controller('DepartureCtrl', function($rootScope, $scope, $http, $filter, $co
 
 	
 	function initModel(src) {		
-		$scope.tpModel = $rootScope.tpObjectFactory();
+		$scope.tpModel = appconfigService.tpObjectFactory();
 		if (src) {
 			$scope.tpModel = angular.copy(src);
 			//datetime variables are always a pain
@@ -1167,7 +1278,7 @@ app.controller('DepartureCtrl', function($rootScope, $scope, $http, $filter, $co
 	function initDepartureDataTable() {
 		//for the data tables
 		$scope.datatable = $('#departureTable').DataTable({
-			"order": [[0, "desc"]],
+			"order": [[0, "desc"]],			
 			"responsive": true,
 			"createdRow": function(row, data, dataIndex) {
 				//make angular buttons clickable

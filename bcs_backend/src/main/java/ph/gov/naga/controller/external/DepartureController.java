@@ -39,6 +39,7 @@ public class DepartureController {
     @Autowired
     TerminalPassService terminalPassService;
 
+        
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody DepartureData departureData) {
         logger.info("Updating TerminalPass {} from departure data: {}", id, departureData);

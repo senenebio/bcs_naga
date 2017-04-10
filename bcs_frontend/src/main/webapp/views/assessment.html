@@ -18,24 +18,24 @@
 							<div class= "form-group">									
 									<div class="row"> 
 										<label class="col-md-2"> Terminal Pass ID</label> 
-										<div class="col-md-2 bcs_border">{{tpCurrent.id}}</div>
+										<div class="col-md-2 bcs_border">{{tpModel.id}}</div>
 										
 										<label class="col-md-2">Vehicle ID </label> 
-										<div class="col-md-4 bcs_border">{{tpCurrent.plateNumber}} {{tpCurrent.busCompany}} {{tpCurrent.bodyNumber}}</div>
+										<div class="col-md-4 bcs_border">{{tpModel.plateNumber}} {{tpModel.busCompany}} {{tpModel.bodyNumber}}</div>
 									</div>									
 									<div class="row"> 
 										<label class="col-md-2">From/To</label>
-										<div class="col-md-4 bcs_border">{{tpCurrent.tripOrigin || "UNASSIGNED"}} {{tpCurrent.tripDestination || "UNASSIGNED"}}</div>
+										<div class="col-md-4 bcs_border">{{tpModel.tripOrigin || "UNASSIGNED"}} {{tpModel.tripDestination || "UNASSIGNED"}}</div>
 										
 										<label class="col-md-1">Fees</label> 
-										<div class="col-md-2 bcs_border">{{tpCurrent.tripTerminalFee + tpCurrent.tripParkingFee || "FREE"}}</div>
+										<div class="col-md-2 bcs_border">{{tpModel.tripTerminalFee + tpModel.tripParkingFee || "FREE"}}</div>
 									</div>									
 									<div class="row"> 
 										<label class="col-md-2">Trip Details</label> 
-										<div class="col-md-5 bcs_border">{{tpCurrent.tripType}} {{tpCurrent.tripCoverage}} {{tpCurrent.status}} </div>
+										<div class="col-md-5 bcs_border">{{tpModel.tripType}} {{tpModel.tripCoverage}} {{tpModel.status}} </div>
 										
 										<label class="col-md-2">Assessed By</label>
-										<div class="col-md-3 bcs_border">{{tpCurrent.tripAssessor || "UNASSESSED"}}</div>
+										<div class="col-md-3 bcs_border">{{tpModel.tripAssessor || "UNASSESSED"}}</div>
 									</div>
 									<div class="row"> 
 										
@@ -60,7 +60,7 @@
 										<div class= "form-group">												
 											<label class="col-md-1"> Arrival Time </label>
 											<div class="col-md-4 input-group date">
-												<input id="datetimepickerArrivalTime" name="arrivalTime" ng-model="tpCurrent.arrivalTime"
+												<input id="datetimepickerArrivalTime" name="arrivalTime" ng-model="tpModel.arrivalTime"
 													type= "text" class= "form-control text-uppercase" 
 													data-date-time-picker
 													placeholder= "YYYY-MM-DD HH:mm AM/PM" required />
@@ -72,13 +72,13 @@
 										<div class= "form-group">
 											<label class="col-md-1"> Origin </label>
 											<div class="col-md-4">
-												<input name="arrivalOrigin" ng-model="tpCurrent.arrivalOrigin"
+												<input name="arrivalOrigin" ng-model="tpModel.arrivalOrigin"
 													type= "text" class= "form-control text-uppercase" data-uppercased 
 													placeholder= "ARRIVAL ORIGIN" />
 											</div>												
 											<label class="col-md-1"> Destn </label>
 											<div class="col-md-4">
-												<input name="arrivalDestination" ng-model="tpCurrent.arrivalDestination"
+												<input name="arrivalDestination" ng-model="tpModel.arrivalDestination"
 													type= "text" class= "form-control text-uppercase" data-uppercased
 													placeholder= "ARRIVAL DESTINATION" />
 											</div>
@@ -104,7 +104,7 @@
 										<div class= "form-group">
 											<label class= "col-md-1"> Unloading BAY </label>
 											<div class="col-md-2">
-												<input ng-model="tpCurrent.tripUnloadingBay" type= "text"  
+												<input ng-model="tpModel.tripUnloadingBay" type= "text"  
 													class= "form-control text-uppercase" 
 													placeholder= "-" required/>
 											</div>
@@ -112,7 +112,7 @@
 										<div class= "form-group">
 											<label class= "col-md-1"> Start Unload Time </label>
 											<div class="col-md-4 input-group date">
-												<input id="dataTimePickerUnloadingStart" ng-model="tpCurrent.tripUnloadingStart" 
+												<input id="dataTimePickerUnloadingStart" ng-model="tpModel.tripUnloadingStart" 
 													type= "text" class= "form-control text-uppercase" 
 													data-date-time-picker
 													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
@@ -124,7 +124,7 @@
 										<div class= "form-group">	
 											<label class= "col-md-1"> End Unload Time </label>
 											<div class="col-md-4 input-group date">
-												<input id="dataTimePickerUnloadingEnd" ng-model="tpCurrent.tripUnloadingEnd" 
+												<input id="dataTimePickerUnloadingEnd" ng-model="tpModel.tripUnloadingEnd" 
 													type= "text" class= "form-control text-uppercase" 
 													data-date-time-picker
 													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
@@ -155,7 +155,7 @@
 										<div class= "form-group">
 											<label class= "col-md-1"> Loading BAY </label>
 											<div class="col-md-2">
-												<input ng-model="tpCurrent.tripLoadingBay" type= "text" 
+												<input ng-model="tpModel.tripLoadingBay" type= "text" 
 													class= "form-control text-uppercase" 
 													placeholder= "-" required/>
 											</div>
@@ -163,7 +163,7 @@
 										<div class= "form-group">
 											<label class= "col-md-1"> Start Load Time </label>
 											<div class="col-md-4 input-group date">
-												<input id="datePickerLoadingStart" ng-model="tpCurrent.tripLoadingStart" 
+												<input id="datePickerLoadingStart" ng-model="tpModel.tripLoadingStart" 
 													type= "text" class= "form-control text-uppercase" 
 													data-date-time-picker
 													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
@@ -175,7 +175,7 @@
 										<div class= "form-group">
 											<label class= "col-md-1"> End Load Time </label>
 											<div class="col-md-4 input-group date">
-												<input id="datePickerLoadingEnd" ng-model="tpCurrent.tripLoadingEnd" 
+												<input id="datePickerLoadingEnd" ng-model="tpModel.tripLoadingEnd" 
 													type= "text" class= "form-control text-uppercase" 
 													data-date-time-picker
 													placeholder= "YYYY-MM-dd HH:mm AM/PM" required/>
@@ -207,8 +207,8 @@
 										<div class="form-group">
 											<label class="col-md-1"> Trip Type </label>
 											<div class="col-md-4">
-												<select required ng-model="tpCurrent.tripType" 
-														ng-init="tpCurrent.tripType" 
+												<select required ng-model="tpModel.tripType" 
+														ng-init="tpModel.tripType" 
 														class= "form-control">
 													<option>PASS-THRU</option>
 													<option>PICK-UP</option>
@@ -218,11 +218,12 @@
 											
 											<label class="col-md-1"> Trip Coverage </label>
 											<div class="col-md-4">
-												<select required ng-model="tpCurrent.tripCoverage" 
-														ng-init="tpCurrent.tripCoverage"
+												<select required ng-model="tpModel.tripCoverage" 
+														ng-init="tpModel.tripCoverage"
 														class= "form-control">
 													<option>MNL/VIS/MIN</option>
-													<option>REGIONAL TRIP</option>												
+													<option>REGIONAL</option>
+													<!-- put in config -->
 												</select>
 											</div>
 										</div>
@@ -230,7 +231,7 @@
 										<div class= "form-group">
 											<label class="col-md-1"> Origin </label>
 											<div class="col-md-4">
-												<input ng-model="tpCurrent.tripOrigin" type= "text" 
+												<input ng-model="tpModel.tripOrigin" type= "text" 
 													class="form-control text-uppercase" 
 													data-uppercased
 													placeholder= "TRIP ORIGIN" required/>
@@ -238,7 +239,7 @@
 
 											<label class= "col-md-1"> Dest </label>
 											<div class= "col-md-4">
-												<input ng-model="tpCurrent.tripDestination" type= "text" 
+												<input ng-model="tpModel.tripDestination" type= "text" 
 													class="form-control text-uppercase" 
 													data-uppercased
 													placeholder= "TRIP DESTINATION" required/>
@@ -266,7 +267,7 @@
 										<div class="form-group">											
 											<label class="col-md-2">TERMINAL FEE</label>
 											<div class="col-md-4">
-												<input ng-model="tpCurrent.tripTerminalFee" type= "number" 
+												<input ng-model="tpModel.tripTerminalFee" type= "number" 
 													class= "form-control text-right" 
 													placeholder= "FREE" required/>
 											</div>
@@ -275,7 +276,7 @@
 										<div class="form-group">											
 											<label class="col-md-2">PARKING FEE</label>
 											<div class="col-md-4">
-												<input ng-model="tpCurrent.tripParkingFee" type= "number" 
+												<input ng-model="tpModel.tripParkingFee" type= "number" 
 													class= "form-control text-right" 
 													placeholder= "FREE" required/>
 											</div>
@@ -285,11 +286,11 @@
 											<label class="col-md-2">TOTAL PHP</label>
 											<div class="col-md-4">
 												<!--
-												<input ng-bind="{{tpCurrent.tripTerminalFee + tpCurrent.tripParkingFee}}" 
+												<input ng-bind="{{tpModel.tripTerminalFee + tpModel.tripParkingFee}}" 
 													type= "number" class= "form-control text-right" 
 													placeholder= "FREE" readonly/>
 												-->
-												<div class="bcs_border">{{tpCurrent.tripTerminalFee + tpCurrent.tripParkingFee || "FREE"}}</div>
+												<div class="bcs_border">{{tpModel.tripTerminalFee + tpModel.tripParkingFee || "FREE"}}</div>
 									
 											</div>
 										</div>

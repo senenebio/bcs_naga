@@ -1,7 +1,7 @@
 'use strict';
 
 
-var app = angular.module('mainApp', ['ngRoute', 'ui.bootstrap']); 
+var app = angular.module('mainApp', ['ngRoute', 'ui.bootstrap', 'angular-loading-bar']); 
 
 
 // configure routes
@@ -57,7 +57,10 @@ app.config(['$httpProvider', function($httpProvider) {
 	
 	var token = "demo-security-token";
 	$httpProvider.defaults.headers.common['Authorization'] = 'BEARER ' + token;
+	
+	
 }]);
+
 
 //custom directive for bootstrap datetime picker work with angular
 app.directive('dateTimePicker',function() {
@@ -99,80 +102,26 @@ app.directive('uppercased', function() {
 	};
 });
 
+app.directive('loading', ['$http', function ($http) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+        scope.isLoading = function () {
+          return $http.pendingRequests.length > 0;
+        };
+        scope.$watch(scope.isLoading, function (value) {
+          if (value) {
+            element.removeClass('ng-hide');
+          } else {
+            element.addClass('ng-hide');
+          }
+        });
+      }
+    };
+}]);
+
 app.run(function($rootScope){
-	
-	$rootScope.tpObjectFactory = function () {
-		//json passed in request body
-		var tpObject = {
-			//common
-			id : null,
-			
-			//arrival
-			plateNumber : null,  
-			bodyNumber  : null,
-			busCompany  : null,
-			arrivalTime : null,
-			arrivalOrigin      : null,
-			arrivalDestination : null,
-			arrivalRecorder    : null,
-			
-			//assessment
-			tripType        : null,
-			tripCoverage    : null,
-			tripOrigin      : null,
-			tripDestination : null,
-						
-			tripUnloadingBay   : null,
-			tripUnloadingStart : null, 
-			tripUnloadingEnd   : null,
-			
-			tripLoadingBay   : null,
-			tripLoadingStart : null,
-			tripLoadingEnd   : null,
-						
-			tripTerminalFee : null,
-			tripParkingFee  : null,			
-			tripAssessor    : null,
-			
-			//payment
-			paymentIdNumber : null,
-			
-			//approval
-			approvedBy   : null,
-			approvedTime : null,
-			
-			//common
-			status       : null,			
-		};
-		return tpObject;
-	};
-	
-	$rootScope.paymentObjectFactory = function () {
-		var pObject = {
-			id: null,
-			origReceiptNumber: null,
-			origReceiptDate: null,
-			paidBy: null,
-			paidByAddress: null,
-			collectedBy: null,
-			etracsObjectId: null,
-			etracsPostDate: null,
-			paymentItems: [],
-		};		
-		return pObject;
-	};
-	
-	$rootScope.paymentItemObjectFactory = function () {
-		var pItemObject = {			
-			id: null,
-			itemCode: null,
-			itemTitle: null,
-			amount: 0,
-			paymentId: null,
-		};		
-		return pItemObject;
-	};
-	
+	//nothing here
 });
 
 	
@@ -189,5 +138,5 @@ angular.element(document).ready(() => {
 // on page load, because IE can't understand lambda
 angular.element(document).ready(function() {
 	// manually bootstrap Angular
-	angular.bootstrap(document, ['mainApp'])
+	angular.bootstrap(document, ['mainApp']);
 });

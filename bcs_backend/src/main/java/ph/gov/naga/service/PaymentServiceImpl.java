@@ -60,6 +60,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void delete(Long id) {
         paymentRepository.delete(id);
+        paymentRepository.flush();
     }
 
 }

@@ -5,15 +5,12 @@
  */
 package ph.gov.naga.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 
@@ -21,6 +18,7 @@ import lombok.Data;
  *
  * @author Drei
  */
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "payment")
 @Data
@@ -52,7 +50,7 @@ public class Payment {
     private String etracsPostDate;
 
     //see: http://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
-    @OneToMany(mappedBy = "payment")
-    @JsonManagedReference
-    List<PaymentItem> paymentItems;
+    //@OneToMany(mappedBy = "payment")
+    //@JsonManagedReference
+    //List<PaymentItem> paymentItems;
 }
